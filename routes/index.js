@@ -1,7 +1,7 @@
-const journeyTrackingRoutes = require('./journey-tracking');
+const journeyTrackerRoutes = require('./journey-tracker');
 
 const init = (app) => {
-    app.use('/api/journey-tracking', journeyTrackingRoutes)
+    app.use('/api/journey-tracking', journeyTrackerRoutes)
 }
 
 module.exports = {
