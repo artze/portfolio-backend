@@ -1,8 +1,7 @@
+const journeyTrackingRoutes = require('./journey-tracking');
+
 const init = (app) => {
-    app.get('/api', (req, res) => {
-        res.status(200);
-        res.end('API Endpoint says Hello!')
-    })
+    app.use('/api/journey-tracking', journeyTrackingRoutes)
 }
 
 module.exports = {

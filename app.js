@@ -18,5 +18,5 @@ app.options('*', cors());
 routes.init(app);
 
 app.listen(port, () => {
-	console.log(`Express running on ${port}`)
+	console.log(`Express running on ${port}`);
 })
