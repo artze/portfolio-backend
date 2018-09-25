@@ -1,9 +1,9 @@
 const journeyTrackerData = require('../../app-data/journey-tracker');
 
-const getTrackingDevices = (req, res) => {
+const getTrackerDevices = (req, res) => {
     res.status(200).json(Object.keys(journeyTrackerData));
 }
 
 module.exports = {
-    getTrackingDevices
+    getTrackerDevices
 }
