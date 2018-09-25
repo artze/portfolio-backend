@@ -3,4 +3,6 @@ const journeyTrackerController = require('../controllers/journey-tracker/apiCont
 
 router.get('/tracker-devices', journeyTrackerController.getTrackerDevices);
 
+router.post('/query', journeyTrackerController.getJourneyListResults)
+
 module.exports = router;
