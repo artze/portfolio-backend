@@ -1,7 +1,6 @@
 const router = require('express').Router();
+const journeyTrackerController = require('../controllers/journey-tracker/apiController')
 
-router.get('/', (req, res) => {
-    res.status(200).end('Journey-tracker test')
-});
+router.get('/journey-trackers', journeyTrackerController.getTrackingDevices);
 
 module.exports = router;
