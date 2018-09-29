@@ -1,10 +1,10 @@
 const journeyTrackerRoutes = require('./journey-tracker');
-const websocketAppRoutes = require('./websocket-app');
+const chatAppRoutes = require('./chat-app');
 
 const init = (app) => {
     app.use('/api/journey-tracker', journeyTrackerRoutes);
 
-    app.use('/api/websocket-app', websocketAppRoutes);
+    app.use('/api/chat-app', chatAppRoutes);
 }
 
 module.exports = {
