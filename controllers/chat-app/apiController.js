@@ -6,7 +6,6 @@ const relayMessage = (ws, req) => {
     // Register client id
     expressWsInstance.getWss().on('connection', (ws) => {
         ws.id = uuidv4();
-        console.log('connected')
     })
 
     ws.on('message', (msg) => {
