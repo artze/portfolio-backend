@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 
-const app = express();
-const expressWs = require('express-ws')(app);
+const app = module.exports = express();
+const expressWsInstance = require('./websocket');
 const routes = require('./routes');
 
 const port = process.env.PORT || 3000
