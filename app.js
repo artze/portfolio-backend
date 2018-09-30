@@ -1,10 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const routes = require('./routes');
 const cors = require('cors');
 
-const app = express();
+const app = module.exports = express();
+const expressWsInstance = require('./websocket');
+const routes = require('./routes');
+
 const port = process.env.PORT || 3000
 
 app.use(bodyParser.json());
