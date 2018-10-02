@@ -2,11 +2,12 @@ const expressWsInstance = require('../../websocket');
 const uuidv4 = require('uuid/v4');
 
 const relayMessage = (ws, req) => {
-
-    // Register client id
-    expressWsInstance.getWss().on('connection', (ws) => {
+    if(!ws.id) {
         ws.id = uuidv4();
-    })
+    }
+    let pingInterval = setInterval(() => {
+        ws.ping('heartbeat');
+    }, 30000)
 
     ws.on('message', (msg) => {
         expressWsInstance.getWss().clients.forEach((client) => {
@@ -15,6 +16,11 @@ const relayMessage = (ws, req) => {
             }
             client.send(msg);
         })
+    })
+
+    ws.on('close', () => {
+        clearInterval(pingInterval);
+        pingInterval = null;
     })
 }
 
