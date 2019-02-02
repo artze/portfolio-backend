@@ -18,8 +18,16 @@
         const img = document.querySelector('img');
 
         let front = false;
-        let constraints = { video: { facingMode: (front? 'user' : 'environment') } };
+        let constraints = { video: { facingMode: { exact: camMode() } } };
         let videoStream;
+
+        function camMode() {
+            if (front) {
+                return 'user'
+            } else {
+                return 'environment'
+            }
+        }
 
         function displayVideoFeed() {
             navigator.mediaDevices.getUserMedia(constraints)
@@ -27,6 +35,14 @@
                     videoStream = stream;
                     video.srcObject = stream;
             })
+        }
+
+        function stopAllVideoTracks() {
+            if(videoStream && videoStream.getVideoTracks().length > 0) {
+                videoStream.getVideoTracks().forEach((track) => {
+                    track.stop();
+                })
+            }
         }
 
         displayVideoFeed();
@@ -41,8 +57,11 @@
 
         changeCamBtn.addEventListener('click', () => {
             front = !front;
-            videoStream.getVideoTracks()[0].stop();
+            stopAllVideoTracks();
             displayVideoFeed();
+            console.log(front);
+            console.log(camMode());
+            console.log(constraints);
         })
 
     </script>
