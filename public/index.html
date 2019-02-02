@@ -7,15 +7,20 @@
 <body>
     <video autoplay></video>
     <button id="capture-btn">Capture</button>
+    <button id="change-cam-btn">Change camera</button>
     <canvas style="display:none;"></canvas>
     <img src="">
     <script>
         const video = document.querySelector('video');
         const captureBtn = document.querySelector('#capture-btn');
+        const changeCamBtn = document.querySelector('#change-cam-btn');
         const canvas = document.querySelector('canvas');
         const img = document.querySelector('img');
 
-        navigator.mediaDevices.getUserMedia({ video: true })
+        let front = false;
+        let constraints = { video: { facingMode: (front? 'user' : 'environment') } };
+
+        navigator.mediaDevices.getUserMedia(constraints)
             .then((stream) => {
                 video.srcObject = stream;
             })
@@ -28,6 +33,9 @@
             img.src = canvas.toDataURL('image/webp');
         })
 
+        changeCamBtn.addEventListener('click', () => {
+            front = !front;
+        })
     </script>
 </body>
 </html>
