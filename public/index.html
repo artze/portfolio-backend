@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cam test</title>
+</head>
+<body>
+    <video autoplay></video>
+    <button id="capture-btn">Capture</button>
+    <canvas style="display:none;"></canvas>
+    <img src="">
+    <script>
+        const video = document.querySelector('video');
+        const captureBtn = document.querySelector('#capture-btn');
+        const canvas = document.querySelector('canvas');
+        const img = document.querySelector('img');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+
+        captureBtn.addEventListener('click', () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            // Other browsers will fall back to image/png
+            img.src = canvas.toDataURL('image/webp');
+        })
+
+    </script>
+</body>
+</html>
