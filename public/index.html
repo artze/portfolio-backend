@@ -19,11 +19,17 @@
 
         let front = false;
         let constraints = { video: { facingMode: (front? 'user' : 'environment') } };
+        let videoStream;
 
-        navigator.mediaDevices.getUserMedia(constraints)
-            .then((stream) => {
-                video.srcObject = stream;
+        function displayVideoFeed() {
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then((stream) => {
+                    videoStream = stream;
+                    video.srcObject = stream;
             })
+        }
+
+        displayVideoFeed();
 
         captureBtn.addEventListener('click', () => {
             canvas.width = video.videoWidth;
@@ -35,7 +41,10 @@
 
         changeCamBtn.addEventListener('click', () => {
             front = !front;
+            videoStream.getVideoTracks()[0].stop();
+            displayVideoFeed();
         })
+
     </script>
 </body>
 </html>
