@@ -17,17 +17,16 @@
         const canvas = document.querySelector('canvas');
         const img = document.querySelector('img');
 
-        let front = false;
-        let constraints = { video: { facingMode: { exact: camMode() } } };
-        let videoStream;
-
-        function camMode() {
-            if (front) {
-                return 'user'
-            } else {
-                return 'environment'
+        let deviceIdArr = [];
+        let index = 0;
+        let constraints = {
+            video: {
+                deviceId: {
+                    exact: ''
+                }
             }
         }
+        let videoStream;
 
         function displayVideoFeed() {
             navigator.mediaDevices.getUserMedia(constraints)
@@ -45,7 +44,27 @@
             }
         }
 
-        displayVideoFeed();
+        function incrementIndex() {
+            index++;
+            if(index >= deviceIdArr.length) {
+                index = 0;
+            }
+        }
+
+        navigator.mediaDevices.enumerateDevices()
+            .then((devices) => {
+                const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+                deviceIdArr = videoDevices.map((device) => device.deviceId);
+                constraints.video.deviceId.exact = deviceIdArr[index];
+                displayVideoFeed();
+            })
+
+        changeCamBtn.addEventListener('click', () => {
+            incrementIndex();
+            constraints.video.deviceId.exact = deviceIdArr[index];
+            stopAllVideoTracks();
+            displayVideoFeed();
+        })
 
         captureBtn.addEventListener('click', () => {
             canvas.width = video.videoWidth;
@@ -54,16 +73,6 @@
             // Other browsers will fall back to image/png
             img.src = canvas.toDataURL('image/webp');
         })
-
-        changeCamBtn.addEventListener('click', () => {
-            front = !front;
-            stopAllVideoTracks();
-            displayVideoFeed();
-            console.log(front);
-            console.log(camMode());
-            console.log(constraints);
-        })
-
     </script>
 </body>
 </html>
