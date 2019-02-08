@@ -24,8 +24,8 @@
                 deviceId: {
                     exact: ''
                 },
-                height: 842,
-                width: 595
+                height: window.screen.orientation.type === 'landscape-primary' ? 842 : 595,
+                width: window.screen.orientation.type === 'landscape-primary' ? 595 : 842
             }
         }
         let videoStream;
