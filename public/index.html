@@ -16,7 +16,6 @@
         const changeCamBtn = document.querySelector('#change-cam-btn');
         const canvas = document.querySelector('canvas');
         const img = document.querySelector('img');
-        let imageCapture;
 
         let deviceIdArr = [];
         let index = 0;
@@ -24,7 +23,9 @@
             video: {
                 deviceId: {
                     exact: ''
-                }
+                },
+                height: 842,
+                width: 595
             }
         }
         let videoStream;
@@ -34,23 +35,7 @@
                 .then((stream) => {
                     videoStream = stream;
                     video.srcObject = stream;
-
-                    const track = stream.getVideoTracks()[0];
-                    imageCapture = new ImageCapture(track);
-
-                    checkCamResolution()
             })
-        }
-
-        function checkCamResolution() {
-            imageCapture.getPhotoCapabilities()
-                .then((photoCapabilities) => {
-                    alert(
-                        `Min Image Width: ${photoCapabilities.imageWidth.min}` +
-                        `Max Image Width: ${photoCapabilities.imageWidth.max}` +
-                        `Image Width Step: ${photoCapabilities.imageWidth.step}`
-                    )
-                })
         }
 
         function stopAllVideoTracks() {
@@ -84,20 +69,11 @@
         })
 
         captureBtn.addEventListener('click', () => {
-            // canvas.width = video.videoWidth;
-            // canvas.height = video.videoHeight;
-            // canvas.getContext('2d').drawImage(video, 0, 0);
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
             // Other browsers will fall back to image/png
-            // img.src = canvas.toDataURL('image/webp');
-
-            const photoSettings = {
-                imageWidth: 580
-            }
-            
-            imageCapture.takePhoto(photoSettings)
-                .then((blob) => {
-                    img.src = URL.createObjectURL(blob)
-                })
+            img.src = canvas.toDataURL('image/webp');
         })
     </script>
 </body>
