@@ -77,7 +77,12 @@
             // Other browsers will fall back to image/png
             // img.src = canvas.toDataURL('image/webp');
 
-            imageCapture.takePhoto()
+            const photoSettings = {
+                imageHeight: 842,
+                imageWidth: 595
+            }
+            
+            imageCapture.takePhoto(photoSettings)
                 .then((blob) => {
                     img.src = URL.createObjectURL(blob)
                 })
