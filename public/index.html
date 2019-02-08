@@ -16,6 +16,7 @@
         const changeCamBtn = document.querySelector('#change-cam-btn');
         const canvas = document.querySelector('canvas');
         const img = document.querySelector('img');
+        let imageCapture;
 
         let deviceIdArr = [];
         let index = 0;
@@ -33,6 +34,9 @@
                 .then((stream) => {
                     videoStream = stream;
                     video.srcObject = stream;
+
+                    const track = stream.getVideoTracks()[0];
+                    imageCapture = new imageCapture(track);
             })
         }
 
@@ -67,11 +71,16 @@
         })
 
         captureBtn.addEventListener('click', () => {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0);
+            // canvas.width = video.videoWidth;
+            // canvas.height = video.videoHeight;
+            // canvas.getContext('2d').drawImage(video, 0, 0);
             // Other browsers will fall back to image/png
-            img.src = canvas.toDataURL('image/webp');
+            // img.src = canvas.toDataURL('image/webp');
+
+            imageCapture.takePhoto()
+                .then((blob) => {
+                    img.src = URL.createObjectURL(blob)
+                })
         })
     </script>
 </body>
