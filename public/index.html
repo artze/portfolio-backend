@@ -37,7 +37,20 @@
 
                     const track = stream.getVideoTracks()[0];
                     imageCapture = new ImageCapture(track);
+
+                    checkCamResolution()
             })
+        }
+
+        function checkCamResolution() {
+            imageCapture.getPhotoCapabilities()
+                .then((photoCapabilities) => {
+                    alert(
+                        `Min Image Width: ${photoCapabilities.imageWidth.min}` +
+                        `Max Image Width: ${photoCapabilities.imageWidth.max}` +
+                        `Image Width Step: ${photoCapabilities.imageWidth.step}`
+                    )
+                })
         }
 
         function stopAllVideoTracks() {
