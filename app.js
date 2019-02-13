@@ -19,6 +19,9 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 routes.init(app);
 
+//REMOVE THIS LINE
+console.log(process.env.EMAIL_ADD)
+
 app.listen(port, () => {
 	console.log(`Express running on ${port}`);
 })
