@@ -4,10 +4,13 @@ const del = require('del');
 
 function handlePdfMail(req, res, next) {
     let filenameStore;
+    let recipientEmail;
+    
     handlePdfUpload(req, res)
         .then(function(filename) {
             filenameStore = filename;
-            return mailer.sendWithAttachment(filename);
+            recipientEmail = req.body.email;
+            return mailer.sendWithAttachment(filename, recipientEmail);
         })
         .then(function() {
             res.status(200).end();
