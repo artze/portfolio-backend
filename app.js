@@ -9,15 +9,14 @@ const expressWsInstance = require('./websocket');
 const routes = require('./routes');
 
 const port = process.env.PORT || 3000
+const corsOptions = {
+	origin: 'http://localhost:8080'
+}
 
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use(cors({
-	origin: 'http://localhost:8080',
-	credentials: true,
-	allowedHeaders: ['Content-Type', 'Authorization']
-}));
-app.options('*', cors());
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 routes.init(app);
 
 app.listen(port, () => {
